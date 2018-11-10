@@ -1,3 +1,8 @@
-django
-django-heroku
+dj-database-url
+Django
+django-postgres-copy
 gunicorn
+psycopg2
+python-dateutil
+python-decouple
+whitenoise
