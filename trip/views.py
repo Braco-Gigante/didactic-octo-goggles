@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from trip.forms import BenefactorForm, TripForm, CostForm
 from trip.models import Benefactor, Trip, Cost
+from datetime import datetime
 
 
 def index(request):
@@ -11,12 +12,42 @@ def index(request):
 def index_adm(request):
     all_trips = Trip.objects.all()
 
+    # pie
     costs = Cost.objects.all()
-
     pie_graph_data = _get_cat_data(costs)
 
+    # bar
+    cities = Cost.objects.values_list('where', flat=True).distinct()
+
+    values_dict = {}
+    values = []
+    for city in cities:
+        try:
+            values_dict[city] = Cost.objects.all().filter(where=city)
+        except:
+            values_dict[city] = 0.0
+
+        aux = 0
+        for value in values_dict[city]:
+            aux += float(value.value.replace(',', '.'))
+        values.append(aux)
+
+    # series
+    days = []
+    values_per_month = [0 for x in range(12)]
+    days_list = list(Cost.objects.values_list('when', flat=True))
+    cost_list = list(Cost.objects.values_list('value', flat=True))
+    for day in days_list:
+        days.append(datetime.strptime(day, '%d/%m/%Y'))
+    for i, day in enumerate(days):
+        values_per_month[day.month-1] += values[i]
+
     context = {'trips': all_trips,
-               'pie_graph_data': pie_graph_data}
+               'pie_graph_data': pie_graph_data,
+               'cities': cities,
+               'values': values,
+               'values_pm': values_per_month,
+               }
 
     return render(request, 'trip/index_adm.html', context)
 
