@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
 <div class="topo row">
-	<h5>{{trip.benefactor}} ({{trip.origin}} --> {{trip.destination}})</h5>
+	<h5>{{trip.name}}</h5>
 	<h6 class="right">R${{total_spent}}/R${{declared_limit}} Esperados</h6>
 	<div class="progress blue lighten-3">
 		<div class="determinate blue" style="width: {{percentage}}%"></div>
