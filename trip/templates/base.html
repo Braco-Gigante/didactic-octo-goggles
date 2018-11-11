@@ -1,0 +1,45 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Disciplinas</title>
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css"> -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+
+<body>
+    <nav>
+        <div class="nav-wrapper red darken-1 row">
+            <a class="brand-logo center">Dina</a>
+            <ul id="nav-mobile" class="left hide-on-med-and-down">
+                <li><a>Inicio</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container" style="min-height: 100vh;">
+        {% block content %}
+        {% endblock %}
+    </div>
+
+    <footer class="page-footer red darken-1">
+        <div class="container">
+            <div class="row">
+                <div class="col l12 m12 s12">
+                    <h5 class="white-text">Dina</h5>
+                    <p class="grey-text text-lighten-4">Feito com ♥ no ICMC-USP</p>
+                </div>
+            </div>
+        </div>
+        <div class="footer-copyright">
+            <div class="container">
+                Alguma outra info aqui
+            </div>
+        </div>
+    </footer>
+
+</body>
+
+</html>
