@@ -1,0 +1,64 @@
+body{
+	background: #ededed;
+}
+
+.topo{
+	padding: 20px;
+	margin-top: 8vh;
+	background-color: white;
+	height: auto;
+	border-style: solid;
+	border-width: 1px;
+	border-color: #DDDDDD;
+}
+
+.topo img{
+	height: 10vh;
+	width: 10vh;
+	border-radius: 50%;
+	margin-right: 3vh;
+}
+
+
+.topo h6{
+	color: #666
+}
+
+.item-list{
+	height: 80px;
+}
+
+.item-list h5{
+	font-size: 18px;
+	height: 80px;
+}
+.item-list .item-{
+	padding-left: 10px;
+	font-size: 14px;
+	color: #999;
+	height: 80px;
+}
+
+.item-list .data{
+	padding-left: 10px;
+	font-size: 14px;
+	color: #999;
+	height: 80px;
+}
+
+.item-list .preco{
+	padding-left: 10px;
+	font-size: 16px;
+	color: #666;
+	height: 80px;
+}
+
+
+.item-list:hover{
+	background-color: #ddd !important;
+	cursor: pointer;
+}
+
+.item-list-bg:hover{
+	background-color: #ddd !important;
+}
