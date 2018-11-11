@@ -23,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'z!v4@nbpe5t-v&nq)@k_%rq+i7+fn(**&0ay=!eo-xk=ps%%-t'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['https://didactic-octo-goggles.herokuapp.com/']
 
