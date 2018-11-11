@@ -48,7 +48,7 @@ def index_adm(request):
     for day in days_list:
         days.append(datetime.strptime(day, '%d/%m/%Y'))
     for i, day in enumerate(days):
-        values_per_month[day.month-1] += float(cost_list[i])
+        values_per_month[day.month-1] += float(cost_list[i].replace(',','.'))
 
     context = {'trips': all_trips,
                'pie_graph_data': pie_graph_data,
