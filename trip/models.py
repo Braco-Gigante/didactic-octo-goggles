@@ -5,13 +5,12 @@ from django.dispatch import receiver
 
 
 class Benefactor(models.Model):
-    name = models.CharField(max_length=100, null=False)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, default=1)
     role = models.CharField(max_length=100, null=False)
     admin = models.BooleanField(default=False)
-    user = models.OneToOneField(User, on_delete=models.CASCADE, default=1)
 
     def __str__(self):
-        return self.name
+        return self.user.username
 
 
 @receiver(post_save, sender=User)
@@ -22,7 +21,11 @@ def create_user_profile(sender, instance, created, **kwargs):
 
 @receiver(post_save, sender=User)
 def save_user_profile(sender, instance, **kwargs):
-    instance.benefactor.save()
+	try:
+		instance.benefactor.save()
+	except:
+		benefactor = Benefactor.objects.create(user=instance)	
+		benefactor.save()
 
 
 class Trip(models.Model):

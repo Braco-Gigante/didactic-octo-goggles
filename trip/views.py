@@ -202,3 +202,4 @@ def edit_cost(request, pk):
     else:
         form = CostForm(instance=cost)
     return render(request, 'trip/generic_form.html', {'form': form})
+
