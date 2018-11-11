@@ -38,6 +38,8 @@ def add_trip(request):
         form = TripForm(request.POST)
         if form.is_valid():
             trip = form.save(commit=False)
+            trip.benefactor = Benefactor.objects.get(
+                name=request.user.username)
             trip.save()
             return redirect('/')
     else:
@@ -59,11 +61,12 @@ def edit_trip(request, pk):
     return render(request, 'trip/generic_form.html', {'form': form})
 
 
-def add_cost(request):
+def add_cost(request, trip_pk):
     if request.method == 'POST':
         form = CostForm(request.POST, request.FILES)
         if form.is_valid():
             cost = form.save(commit=False)
+            cost.trip = Trip.objects.get(pk=trip_pk)
             cost.save()
             return redirect('/')
     else:

@@ -14,15 +14,15 @@ class BenefactorForm(forms.ModelForm):
 
 
 class TripForm(forms.ModelForm):
+    name = forms.CharField(max_length=100)
     origin = forms.CharField(max_length=100)
     destination = forms.CharField(max_length=100)
     start = forms.CharField(max_length=100)
     end = forms.CharField(max_length=100)
-    benefactor = forms.CharField(max_length=100)
 
     class Meta:
         model = Trip
-        fields = ['origin', 'destination', 'start', 'end', 'benefactor']
+        fields = ['name', 'origin', 'destination', 'start', 'end']
 
 
 class CostForm(forms.ModelForm):
@@ -32,10 +32,9 @@ class CostForm(forms.ModelForm):
     when = forms.CharField(max_length=100)
     category = forms.CharField(max_length=100)
     value = forms.CharField(max_length=100)
-    trip = forms.CharField(max_length=100)
     receipt = forms.ImageField()
 
     class Meta:
         model = Cost
         fields = ['name', 'description', 'where',
-                  'when', 'category', 'value', 'trip', 'receipt']
+                  'when', 'category', 'value', 'receipt']
