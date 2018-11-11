@@ -9,6 +9,6 @@ urlpatterns = [
     path('trip/', views.add_trip, name='trip'),
     path('trip/edit/<pk>', views.edit_trip, name='cost'),
     path('trip/<pk>', views.trip_single, name='trip_single'),
-    path('trip/<trip_pk>/cost/', views.add_cost, name='cost'),
+    path('trip/<trip_pk>/cost/', views.add_cost, name='add_cost'),
     path('cost/<pk>', views.edit_cost, name='edit_cost'),
 ]

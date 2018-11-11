@@ -8,9 +8,12 @@
 	<hr>
 	<ul class="collection">
 		{% for trip in trips %}
-		<a href="{% url 'trip_single' trip.pk %}"><li class="collection-item item-list">
-			<h5>{{trip.benefactor}} ({{trip.origin}} --> {{trip.destination}})<spam class="data">{{trip.start}} a {{trip.end}}</spam></h5>
-		</li></a>
+		<a href="{% url 'trip_single' trip.pk %}">
+			<li class="collection-item item-list">
+				<h5 style="color:#333">{{trip.benefactor}} ({{trip.origin}} --> {{trip.destination}})<spam class="data">{{trip.start}} a {{trip.end}}</spam>
+				</h5>
+			</li>
+		</a>
 		{% endfor %}
 	</ul>
 	<a href="#" class="right btn-flat modal-trigger">ver mais</a>
@@ -26,7 +29,7 @@
 		</div>
 	</div>
 	<div class="col m6">
-		<h5 class="left-align">Gastos semanais</h5>
+		<h5 class="left-align">Gastos por cidade</h5>
 		<hr>
 		<div style="background-color:white">
 			<div id="city-bar"></div>
@@ -35,7 +38,7 @@
 </div>
 
 <div class="row">
-	<h5 class="left-align">Gastos semanais</h5>
+	<h5 class="left-align">Gastos mensais</h5>
 	<hr>
 	<div id="serie-temp"></div>
 
@@ -44,157 +47,179 @@
 <!-- Graficos -->
 
 <script type="text/javascript">
-Highcharts.chart('serie-temp', {
+	Highcharts.chart('serie-temp', {
 
-	title: {
-		text: 'Solar Employment Growth by Sector, 2010-2016'
-	},
-
-	subtitle: {
-		text: 'Source: thesolarfoundation.com'
-	},
-
-	yAxis: {
 		title: {
-			text: 'Number of Employees'
+			text: 'Gastos com diárias'
+		},
+
+		subtitle: {
+			text: 'por mês e na unidade'
+		},
+
+		xAxis: {
+			type: 'datetime'
+		},
+
+		yAxis: {
+			title: {
+				text: 'Valor gasto (R$)'
+			}
+		},
+		legend: {
+			layout: 'vertical',
+			align: 'right',
+			verticalAlign: 'middle'
+		},
+		tooltip: {
+			valuePrefix: 'R$ '
+		},
+
+
+		plotOptions: {
+			series: {
+				label: {
+					connectorAllowed: false
+				},
+				pointStart: Date.UTC(2018, 0),
+				pointIntervalUnit: 'month' // one month
+
+			}
+		},
+
+		series: [{
+			name: 'Gastos',
+			data: [
+				{% for value in values_pm %}
+					{{ value }},
+		{% endfor %}
+			],
+		}],
+
+		responsive: {
+			rules: [{
+				condition: {
+					maxWidth: 500
+				},
+				chartOptions: {
+					legend: {
+						layout: 'horizontal',
+						align: 'center',
+						verticalAlign: 'bottom'
+					}
+				}
+			}]
 		}
-	},
-	legend: {
-		layout: 'vertical',
-		align: 'right',
-		verticalAlign: 'middle'
-	},
 
-	plotOptions: {
-		series: {
-			label: {
-				connectorAllowed: false
-			},
-			pointStart: 20
-		}
-	},
+	});
 
-	series: [{
-		name: 'Installation',
-		data: [43934, 119931, 137133, 154175]
-	}],
 
-	responsive: {
-		rules: [{
-			condition: {
-				maxWidth: 500
-			},
-			chartOptions: {
-				legend: {
-					layout: 'horizontal',
-					align: 'center',
-					verticalAlign: 'bottom'
+	Highcharts.chart('gasto-cat', {
+		chart: {
+			backgroundColor: 'rgba(255, 255, 255, 0.0)',
+			// plotBackgroundColor: '#ddd',
+			plotShadow: false,
+			type: 'pie'
+		},
+		title: {
+			text: ' '
+		},
+		tooltip: {
+			pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+		},
+		credits: {
+			enabled: false
+		},
+		plotOptions: {
+			pie: {
+				allowPointSelect: true,
+				cursor: 'pointer',
+				dataLabels: {
+					enabled: true,
+					format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+					style: {
+						color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+					}
 				}
 			}
-		}]
-	}
-
-});
-
-
-Highcharts.chart('gasto-cat', {
-	chart: {
-		backgroundColor:'rgba(255, 255, 255, 0.0)',
-        // plotBackgroundColor: '#ddd',
-        plotShadow: false,
-        type: 'pie'
-    },
-    title: {
-    	text: ' '
-    },
-    tooltip: {
-    	pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
-    },
-    credits: {
-    	enabled: false
-    },
-    plotOptions: {
-    	pie: {
-    		allowPointSelect: true,
-    		cursor: 'pointer',
-    		dataLabels: {
-    			enabled: true,
-    			format: '<b>{point.name}</b>: {point.percentage:.1f} %',
-    			style: {
-    				color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
-    			}
-    		}
-    	}
-    },
-    series: [{
-    	name: 'Brands',
-    	colorByPoint: true,
-    	data: [
-    	{% for data in pie_graph_data %}
+		},
+		series: [{
+			name: 'Brands',
+			colorByPoint: true,
+			data: [
+				{% for data in pie_graph_data %}
     	{
-    		name: '{{data.cat}}',
-    		y: {{data.value}}
+			name: '{{data.cat}}',
+			y: {{ data.value }}
     	},
-    	{% endfor %}
+		{% endfor %}
     	]
     }]
 });
 
 
-Highcharts.chart('city-bar', {
-	chart: {
-		type: 'bar'
-	},
-	title: {
-		text: 'Historic World Population by Region'
-	},
-	subtitle: {
-		text: 'Source: <a href="https://en.wikipedia.org/wiki/World_population">Wikipedia.org</a>'
-	},
-	xAxis: {
-		categories: ['Africa', 'America', 'Asia', 'Europe', 'Oceania'],
+	Highcharts.chart('city-bar', {
+		chart: {
+			type: 'bar'
+		},
+		title: {
+			text: 'Gastos'
+		},
+		subtitle: {
+			text: 'por cidade onde ocorreram'
+		},
+		xAxis: {
+			categories: [
+				{% for city in cities %}
+				'{{city}}',
+				{% endfor %}
+			],
 		title: {
 			text: null
 		}
 	},
-	yAxis: {
-		min: 0,
-		title: {
-			text: 'Population (millions)',
-			align: 'high'
-		},
-		labels: {
-			overflow: 'justify'
-		}
-	},
-	tooltip: {
-		valueSuffix: ' millions'
-	},
-	plotOptions: {
-		bar: {
-			dataLabels: {
-				enabled: true
+		yAxis: {
+			min: 0,
+			title: {
+				text: 'Gastos (R$)',
+				align: 'high'
+			},
+			labels: {
+				overflow: 'justify'
 			}
-		}
-	},
-	legend: {
-		layout: 'vertical',
-		align: 'right',
-		verticalAlign: 'top',
-		x: -40,
-		y: 80,
-		floating: true,
-		borderWidth: 1,
-		backgroundColor: ((Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'),
-		shadow: true
-	},
-	credits: {
-		enabled: false
-	},
-	series: [{
-		name: 'Year 1800',
-		data: [107, 31, 635, 203, 2]
-	}]
+		},
+		tooltip: {
+			valuePrefix: 'R$ '
+		},
+		plotOptions: {
+			bar: {
+				dataLabels: {
+					enabled: true
+				}
+			}
+		},
+		legend: {
+			layout: 'vertical',
+			align: 'right',
+			verticalAlign: 'top',
+			x: -40,
+			y: 80,
+			floating: true,
+			borderWidth: 1,
+			backgroundColor: ((Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'),
+			shadow: true
+		},
+		credits: {
+			enabled: false
+		},
+		series: [{
+			name: '2018',
+			data: [
+				{% for value in values %}
+					{{ value }},
+		{% endfor %}
+		]
+		}]
 });
 </script>
 

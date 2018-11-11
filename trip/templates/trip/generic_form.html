@@ -2,19 +2,29 @@
 
 {% block content %}
 
-<div class="col m10">
+<div class="topo row">
+    <h5>{{trip.benefactor}} ({{trip.origin}} --> {{trip.destination}})</h5>
+    <h6 class="right">R${{total_spent}}/R${{declared_limit}} Esperados</h6>
+    <div class="progress blue lighten-3">
+        <div class="determinate blue" style="width: {{percentage}}%"></div>
+    </div>
+</div>
+
+<h5>Adicione um novo gasto</h5>
+<hr>
+<div class="col m10" >
     <form method="post" enctype="multipart/form-data">{% csrf_token %}
-        {% for field in form %}
-        <div class="col s12 m5">
-            <label>{{field.label}}</label>
-            {{field}}
+        <div class="topo" style="margin-top: 0px;">
+            {% for field in form %}
+            <div class="col s12 m5">
+                <label>{{field.label}}</label>
+                {{field}}
+            </div>
+            {% endfor %}
         </div>
-        {% endfor %}
         
         <div style="padding-top:10px">
-            <button class="btn-flat waves-effect waves-light red" type="submit" name="add_post">Enviar
-                <i class="material-icons right">send</i>
-            </button>
+            <button class="btn-flat waves-effect waves-light btn-flat right" type="submit" name="add_post">Enviar</button>
         </div>
     </form>
 </div>

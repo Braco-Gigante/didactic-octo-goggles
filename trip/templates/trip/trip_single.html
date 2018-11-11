@@ -6,7 +6,7 @@
 	<div class="progress blue lighten-3">
 		<div class="determinate blue" style="width: {{percentage}}%"></div>
 	</div>
-	<a href="{{trip.id}}/cost/" class="right btn green">Adicionar gasto</a>
+	<a href="{% url 'add_cost' trip.pk %}" class="right btn green">Adicionar gasto</a>
 </div>
 <div class="row">
 	<div class="col m6">
