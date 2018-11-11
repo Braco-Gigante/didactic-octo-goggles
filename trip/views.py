@@ -12,6 +12,7 @@ def index_adm(request):
     all_trips = Trip.objects.all()
 
     costs = Cost.objects.all()
+    print(costs)
 
     pie_graph_data = _get_cat_data(costs)
 
