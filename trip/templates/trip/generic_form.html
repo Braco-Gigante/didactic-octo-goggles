@@ -2,6 +2,7 @@
 
 {% block content %}
 
+{% if cost %}
 <div class="topo row">
     <h5>{{trip.benefactor}} ({{trip.origin}} --> {{trip.destination}})</h5>
     <h6 class="right">R${{total_spent}}/R${{declared_limit}} Esperados</h6>
@@ -9,8 +10,13 @@
         <div class="determinate blue" style="width: {{percentage}}%"></div>
     </div>
 </div>
+{% endif %}
 
+{% if cost %}
 <h5>Adicione um novo gasto</h5>
+{% else %}
+<h5>Adicione uma nova viagem</h5>
+{% endif %}
 <hr>
 <div class="col m10" >
     <form method="post" enctype="multipart/form-data">{% csrf_token %}

@@ -19,6 +19,7 @@ class TripForm(forms.ModelForm):
     destination = forms.CharField(max_length=100)
     start = forms.CharField(max_length=100)
     end = forms.CharField(max_length=100)
+    expected_cost = forms.FloatField()
 
     class Meta:
         model = Trip

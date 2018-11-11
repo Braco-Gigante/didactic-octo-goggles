@@ -35,6 +35,7 @@ class Trip(models.Model):
     start = models.CharField(max_length=100, null=False)
     end = models.CharField(max_length=100, null=False)
     benefactor = models.ForeignKey('Benefactor', on_delete=models.CASCADE)
+    expected_cost = models.FloatField()
 
     def __str__(self):
         return self.name

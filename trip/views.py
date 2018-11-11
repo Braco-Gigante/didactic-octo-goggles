@@ -97,7 +97,8 @@ def add_trip(request):
             return redirect('/')
     else:
         form = TripForm()
-    return render(request, 'trip/generic_form.html', {'form': form})
+
+    return render(request, 'trip/generic_form.html', {'form': form, 'cost': False})
 
 
 def edit_trip(request, pk):
@@ -144,7 +145,7 @@ def trip_single(request, pk):
     for cost in costs:
         total_spent += float(cost.value.replace(',', '.'))
 
-    declared_limit = 2000
+    declared_limit = trip.expected_cost
     percentage = int((total_spent / declared_limit) * 100)
 
     graph_data = _get_cat_data(costs)
@@ -167,7 +168,7 @@ def add_cost(request, trip_pk):
     for cost in costs:
         total_spent += float(cost.value.replace(',', '.'))
 
-    declared_limit = 2000
+    declared_limit = trip.expected_cost
     percentage = int((total_spent / declared_limit) * 100)
 
     if request.method == 'POST':
@@ -185,7 +186,8 @@ def add_cost(request, trip_pk):
                'total_spent': total_spent,
                'declared_limit': declared_limit,
                'percentage': percentage,
-               'form': form}
+               'form': form,
+               'cost': True}
 
     return render(request, 'trip/generic_form.html', context)
 
