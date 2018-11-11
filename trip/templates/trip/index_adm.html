@@ -19,7 +19,7 @@
 <!-- Gastos por semana -->
 <div class="row">
 	<div class="col m6">
-		<h5 class="left-align">Gastos semanais</h5>
+		<h5 class="left-align">Gastos por categoria</h5>
 		<hr>
 		<div style="background-color:white">
 			<div id="gasto-cat"></div>
@@ -129,16 +129,14 @@ Highcharts.chart('gasto-cat', {
     series: [{
     	name: 'Brands',
     	colorByPoint: true,
-    	data: [{
-    		name: 'Chrome',
-    		y: 60
-    	}, {
-    		name: 'Internet Explorer',
-    		y: 30
-    	}, {
-    		name: 'Firefox',
-    		y: 10
-    	}]
+    	data: [
+    	{% for data in pie_graph_data %}
+    	{
+    		name: '{{data.cat}}',
+    		y: {{data.value}}
+    	},
+    	{% endfor %}
+    	]
     }]
 });
 
