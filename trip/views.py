@@ -50,7 +50,7 @@ def index_adm(request):
     for i, day in enumerate(days):
         values_per_month[day.month-1] += float(cost_list[i].replace(',','.'))
 
-    context = {'trips': all_trips,
+    context = {'trips': all_trips[:5],
                'pie_graph_data': pie_graph_data,
                'cities': cities,
                'values': values,

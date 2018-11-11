@@ -18,7 +18,7 @@
 		{% for trip in trips %}
 		<a href="{% url 'trip_single' trip.pk %}">
 			<li class="collection-item item-list">
-				<h5 style="color:#333">{{trip.benefactor}} ({{trip.origin}} --> {{trip.destination}})<spam class="data">{{trip.start}} a {{trip.end}}</spam>
+				<h5 style="color:#333">{{trip.name}}<spam class="data">{{trip.start}} a {{trip.end}}</spam>
 				</h5>
 			</li>
 		</a>
