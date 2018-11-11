@@ -25,7 +25,7 @@ SECRET_KEY = 'z!v4@nbpe5t-v&nq)@k_%rq+i7+fn(**&0ay=!eo-xk=ps%%-t'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['https://didactic-octo-goggles.herokuapp.com/']
 
 
 # Application definition
