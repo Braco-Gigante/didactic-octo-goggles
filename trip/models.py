@@ -44,7 +44,7 @@ class Cost(models.Model):
     when = models.CharField(max_length=100, null=False)
     category = models.CharField(max_length=100, null=False)
     value = models.CharField(max_length=100, null=False)
-    benefactor = models.ForeignKey('Trip', on_delete=models.CASCADE)
+    trip = models.ForeignKey('Trip', on_delete=models.CASCADE)
     receipt = models.ImageField(
         upload_to='receipts/', default='receipts/default.png')
 

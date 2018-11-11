@@ -44,7 +44,7 @@ def add_trip(request):
         if form.is_valid():
             trip = form.save(commit=False)
             trip.benefactor = Benefactor.objects.get(
-                name=request.user.username)
+                user=request.user)
             trip.save()
             return redirect('/')
     else:
@@ -67,9 +67,12 @@ def edit_trip(request, pk):
 
 def trip_single(request, pk):
     trip = Trip.objects.get(pk=pk)
-    trip_key = f"{trip.origin} ({trip.start}) --> {trip.destination} ({trip.end})"
+    # trip_key = f"{trip.origin} ({trip.start}) --> {trip.destination} ({trip.end})"
 
-    costs = Cost.objects.all().filter(trip=trip_key)
+    try:
+        costs = Cost.objects.all().filter(trip=pk)
+    except:
+        costs = []
 
     total_spent = 0
     for cost in costs:
@@ -101,19 +104,16 @@ def trip_single(request, pk):
                 'graph_data': graph_data}
 
     return render(request, 'trip/trip_single.html', context)
-
-
-
-        # [{
-        #     name: 'Chrome',
-        #     y: 60
-        # }, {
-        #     name: 'Internet Explorer',
-        #     y: 30
-        # }, {
-        #     name: 'Firefox',
-        #     y: 10
-        # }]
+    # [{
+    #     name: 'Chrome',
+    #     y: 60
+    # }, {
+    #     name: 'Internet Explorer',
+    #     y: 30
+    # }, {
+    #     name: 'Firefox',
+    #     y: 10
+    # }]
 
 
 def add_cost(request, trip_pk):
